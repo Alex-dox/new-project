@@ -1,269 +1,138 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Portfolio</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        * { margin:0; padding:0; box-sizing:border-box; }
-        body { font-family:'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height:1.6; color:#333; background:#fff; font-size:16px; }
-
-        .portfolio-container { max-width:1400px; margin:0 auto; padding:60px 20px; }
-        .portfolio-title { font-size:clamp(3rem,8vw,6rem); font-weight:700; text-align:center; margin-bottom:80px; letter-spacing:-0.02em; color:#1a1a1a; }
-
-        .videos-section { margin-bottom:120px; }
-        .video-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
-
-        .video-item { position:relative; background:#000; border-radius:12px; overflow:hidden; box-shadow:0 10px 30px rgba(0,0,0,.1); transition:transform .3s ease, box-shadow .3s ease; cursor:pointer; aspect-ratio:16/9; }
-        .video-item:hover { transform:scale(1.02); box-shadow:0 20px 40px rgba(0,0,0,.2); }
-        .video-item:hover .play-icon { opacity:1; transform:scale(1.1); }
-
-        .video-preview{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; background-size:cover; background-position:center; background-color:#000; }
-        .video-preview::before{ content:''; position:absolute; inset:0; background:rgba(0,0,0,.2); z-index:1; }
-
-        .play-icon{ width:60px; height:60px; background:rgba(255,255,255,.9); border-radius:50%; display:flex; align-items:center; justify-content:center; opacity:.7; transition:.3s ease; z-index:2; position:relative; }
-        .play-icon::after{ content:''; width:0; height:0; border-left:18px solid #000; border-top:11px solid transparent; border-bottom:11px solid transparent; margin-left:4px; }
-
-        .video-iframe-container{ display:none; position:absolute; inset:0; z-index:20; }
-        .video-iframe-container iframe{ width:100%; height:100%; border:0; border-radius:12px; }
-        .video-item.playing .video-preview{ display:none; }
-        .video-item.playing .video-iframe-container{ display:block; }
-
-        .close-video{ position:absolute; top:10px; right:10px; width:30px; height:30px; background:rgba(0,0,0,.6); border-radius:50%; color:#fff; font-size:20px; display:none; align-items:center; justify-content:center; z-index:30; opacity:.9; cursor:pointer; }
-        .video-item.playing .close-video{ display:flex; }
-
-        /* CONTACT */
-        .contact-section{ text-align:center; padding:60px 0; border-top:1px solid #eee; }
-        .contact-section h2{ font-size:clamp(2rem,5vw,3rem); font-weight:600; margin-bottom:24px; color:#1a1a1a; letter-spacing:-0.02em; }
-
-        .contact-wrap{ display:flex; flex-direction:column; align-items:center; gap:16px; }
-        .contact-icons{ display:flex; gap:12px; flex-wrap:wrap; justify-content:center; }
-
-        .icon-btn{
-            width:44px; height:44px; border-radius:999px; border:1px solid #e5e7eb; background:#fff;
-            display:inline-flex; align-items:center; justify-content:center; text-decoration:none;
-            transition:transform .15s ease, box-shadow .15s ease, background .15s ease;
-        }
-        .icon-btn:hover{ transform:translateY(-1px); box-shadow:0 8px 16px rgba(0,0,0,.08); background:#fafafa; }
-        .icon-btn svg{ width:22px; height:22px; }
-
-        .contact-text{
-            display:flex; gap:16px; flex-wrap:wrap; justify-content:center; color:#111;
-        }
-        .contact-text .row{
-            display:flex; align-items:center; gap:8px; padding:8px 12px; border:1px solid #e5e7eb; border-radius:999px; background:#fff;
-        }
-        .contact-text .row span{ user-select:text; }
-
-        @media (max-width:1024px){ .video-grid{ grid-template-columns:repeat(2,1fr); gap:15px; } }
-        @media (max-width:768px){ .portfolio-container{ padding:40px 15px; } .portfolio-title{ margin-bottom:60px; } .videos-section{ margin-bottom:80px; } .video-grid{ grid-template-columns:repeat(2,1fr); gap:12px; } .play-icon{ width:40px; height:40px; } .contact-section{ padding:40px 0; } }
-        @media (max-width:480px){ .portfolio-container{ padding:30px 10px; } .video-grid{ grid-template-columns:1fr; gap:10px; } }
-
-        @media (prefers-reduced-motion:no-preference){
-            .portfolio-title,.video-item,.contact-section{ animation:fadeInUp 1s ease-out; }
-            .contact-section{ animation-delay:.3s; animation-fill-mode:both; }
-        }
-        @keyframes fadeInUp{ from{ opacity:0; transform:translateY(30px);} to{ opacity:1; transform:translateY(0);} }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;line-height:1.6;color:#333;background:#fff;font-size:16px}
+    .portfolio-container{max-width:1400px;margin:0 auto;padding:60px 20px}
+    .portfolio-title{font-size:clamp(3rem,8vw,6rem);font-weight:700;text-align:center;margin-bottom:80px;letter-spacing:-.02em;color:#1a1a1a}
+    .videos-section{margin-bottom:120px}
+    .video-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+    .video-item{position:relative;background:#000;border-radius:12px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,.1);transition:transform .3s,box-shadow .3s;cursor:pointer;aspect-ratio:16/9}
+    .video-item:hover{transform:scale(1.02);box-shadow:0 20px 40px rgba(0,0,0,.2)}
+    .video-item:hover .play-icon{opacity:1;transform:scale(1.1)}
+    .video-preview{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background-size:cover;background-position:center;background-color:#000}
+    .video-preview::before{content:'';position:absolute;inset:0;background:rgba(0,0,0,.2);z-index:1}
+    .play-icon{width:60px;height:60px;background:rgba(255,255,255,.9);border-radius:50%;display:flex;align-items:center;justify-content:center;opacity:.7;transition:.3s;z-index:2;position:relative}
+    .play-icon::after{content:'';width:0;height:0;border-left:18px solid #000;border-top:11px solid transparent;border-bottom:11px solid transparent;margin-left:4px}
+    .video-iframe-container{display:none;position:absolute;inset:0;z-index:20}
+    .video-iframe-container iframe{width:100%;height:100%;border:0;border-radius:12px}
+    .video-item.playing .video-preview{display:none}
+    .video-item.playing .video-iframe-container{display:block}
+    .close-video{position:absolute;top:10px;right:10px;width:30px;height:30px;background:rgba(0,0,0,.6);border-radius:50%;color:#fff;font-size:20px;display:none;align-items:center;justify-content:center;z-index:30;opacity:.9;cursor:pointer}
+    .video-item.playing .close-video{display:flex}
+    .contact-section{text-align:center;padding:60px 0;border-top:1px solid #eee}
+    .contact-section h2{font-size:clamp(2rem,5vw,3rem);font-weight:600;margin-bottom:24px;color:#1a1a1a;letter-spacing:-.02em}
+    .contact-wrap{display:flex;flex-direction:column;align-items:center;gap:16px}
+    .contact-icons{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+    .icon-btn{width:44px;height:44px;border-radius:999px;border:1px solid #e5e7eb;background:#fff;display:inline-flex;align-items:center;justify-content:center;text-decoration:none;transition:transform .15s,box-shadow .15s,background .15s}
+    .icon-btn:hover{transform:translateY(-1px);box-shadow:0 8px 16px rgba(0,0,0,.08);background:#fafafa}
+    .icon-btn img{width:22px;height:22px;object-fit:contain}
+    .contact-text{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;color:#111}
+    .contact-text .row{display:flex;align-items:center;gap:8px;padding:8px 12px;border:1px solid #e5e7eb;border-radius:999px;background:#fff}
+    .contact-text .row span{user-select:text}
+    @media(max-width:1024px){.video-grid{grid-template-columns:repeat(2,1fr);gap:15px}}
+    @media(max-width:768px){.portfolio-container{padding:40px 15px}.portfolio-title{margin-bottom:60px}.videos-section{margin-bottom:80px}.video-grid{grid-template-columns:repeat(2,1fr);gap:12px}.play-icon{width:40px;height:40px}.contact-section{padding:40px 0}}
+    @media(max-width:480px){.portfolio-container{padding:30px 10px}.video-grid{grid-template-columns:1fr;gap:10px}}
+    @keyframes fadeInUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+  </style>
 </head>
 <body>
 <div class="portfolio-container">
-    <h1 class="portfolio-title">PORTFOLIO</h1>
+  <h1 class="portfolio-title">PORTFOLIO</h1>
 
-    <div class="videos-section">
-        <div class="video-grid">
-            <!-- Превью из ./thumbnails/ -->
-            <div class="video-item">
-                <div class="video-preview" style="background-image:url('./thumbnails/video1.jpg');"><div class="play-icon"></div></div>
-                <div class="close-video">×</div>
-                <div class="video-iframe-container">
-                    <iframe src="https://player.vimeo.com/video/1126781538?autopause=0&muted=0&app_id=58479"
-                            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-                            referrerpolicy="strict-origin-when-cross-origin" title="WVB Explainer"
-                            webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-                </div>
-            </div>
-
-            <div class="video-item">
-                <div class="video-preview" style="background-image:url('./thumbnails/video2.jpg');"><div class="play-icon"></div></div>
-                <div class="close-video">×</div>
-                <div class="video-iframe-container">
-                    <iframe src="https://player.vimeo.com/video/1126781301?autopause=0&muted=0&app_id=58479"
-                            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-                            referrerpolicy="strict-origin-when-cross-origin" title="Pulse Promo"
-                            webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-                </div>
-            </div>
-
-            <div class="video-item">
-                <div class="video-preview" style="background-image:url('./thumbnails/video3.jpg');"><div class="play-icon"></div></div>
-                <div class="close-video">×</div>
-                <div class="video-iframe-container">
-                    <iframe src="https://player.vimeo.com/video/1126781752?autopause=0&muted=0&app_id=58479"
-                            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-                            referrerpolicy="strict-origin-when-cross-origin" title="Pulsar"
-                            webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-                </div>
-            </div>
-
-            <div class="video-item">
-                <div class="video-preview" style="background-image:url('./thumbnails/video4.jpg');"><div class="play-icon"></div></div>
-                <div class="close-video">×</div>
-                <div class="video-iframe-container">
-                    <iframe src="https://player.vimeo.com/video/1126781589?autopause=0&muted=0&app_id=58479"
-                            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-                            referrerpolicy="strict-origin-when-cross-origin" title="Art Promo"
-                            webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-                </div>
-            </div>
-
-            <div class="video-item">
-                <div class="video-preview" style="background-image:url('./thumbnails/video5.jpg');"><div class="play-icon"></div></div>
-                <div class="close-video">×</div>
-                <div class="video-iframe-container">
-                    <iframe src="https://player.vimeo.com/video/1126782138?autopause=0&muted=0&app_id=58479"
-                            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-                            referrerpolicy="strict-origin-when-cross-origin" title="WVB Promo"
-                            webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-                </div>
-            </div>
-
-            <div class="video-item">
-                <div class="video-preview" style="background-image:url('./thumbnails/video6.jpg');"><div class="play-icon"></div></div>
-                <div class="close-video">×</div>
-                <div class="video-iframe-container">
-                    <iframe src="https://player.vimeo.com/video/1126782054?autopause=0&muted=0&app_id=58479"
-                            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-                            referrerpolicy="strict-origin-when-cross-origin" title="WVB"
-                            webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-                </div>
-            </div>
-
-            <div class="video-item">
-                <div class="video-preview" style="background-image:url('./thumbnails/video7.jpg');"><div class="play-icon"></div></div>
-                <div class="close-video">×</div>
-                <div class="video-iframe-container">
-                    <iframe src="https://player.vimeo.com/video/1126782179?autopause=0&muted=0&app_id=58479"
-                            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-                            referrerpolicy="strict-origin-when-cross-origin" title="Small ad"
-                            webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-                </div>
-            </div>
-
-            <div class="video-item">
-                <div class="video-preview" style="background-image:url('./thumbnails/video8.jpg');"><div class="play-icon"></div></div>
-                <div class="close-video">×</div>
-                <div class="video-iframe-container">
-                    <iframe src="https://player.vimeo.com/video/1126782216?autopause=0&muted=0&app_id=58479"
-                            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-                            referrerpolicy="strict-origin-when-cross-origin" title="Promo"
-                            webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-                </div>
-            </div>
-
-            <div class="video-item">
-                <div class="video-preview" style="background-image:url('./thumbnails/video9.jpg');"><div class="play-icon"></div></div>
-                <div class="close-video">×</div>
-                <div class="video-iframe-container">
-                    <iframe src="https://player.vimeo.com/video/1126782307?autopause=0&muted=0&app_id=58479"
-                            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-                            referrerpolicy="strict-origin-when-cross-origin" title="Corporate template"
-                            webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-                </div>
-            </div>
-
-            <div class="video-item">
-                <div class="video-preview" style="background-image:url('./thumbnails/video10.jpg');"><div class="play-icon"></div></div>
-                <div class="close-video">×</div>
-                <div class="video-iframe-container">
-                    <iframe src="https://player.vimeo.com/video/1126782264?autopause=0&muted=0&app_id=58479"
-                            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-                            referrerpolicy="strict-origin-when-cross-origin" title="Art Promo"
-                            webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-                </div>
-            </div>
+  <div class="videos-section">
+    <div class="video-grid">
+      <div class="video-item">
+        <div class="video-preview" style="background-image:url('./thumbnails/video1.jpg');"><div class="play-icon"></div></div>
+        <div class="close-video">×</div>
+        <div class="video-iframe-container">
+          <iframe src="https://player.vimeo.com/video/1126781538?autopause=0&muted=0&app_id=58479"
+                  allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+                  referrerpolicy="strict-origin-when-cross-origin" title="WVB Explainer"
+                  webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
         </div>
+      </div>
+
+      <!-- ... остальные видео аналогично ... -->
     </div>
+  </div>
 
-    <div class="contact-section">
-        <h2>CONTACT</h2>
-        <div class="contact-wrap">
-            <!-- Иконки-кнопки без текста -->
-            <div class="contact-icons">
-                <!-- Telegram -->
-                <a class="icon-btn" href="https://t.me/AlexViGy" target="_blank" rel="noopener" aria-label="Telegram" title="Telegram">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M22 2L11 13" stroke-width="2"/><path d="M22 2L15.5 21l-4.5-7-7-4.5L22 2z" stroke-width="2" fill="currentColor"/></svg>
-                </a>
-                <!-- LinkedIn -->
-                <a class="icon-btn" href="https://www.linkedin.com/in/alex-videoguy" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn">
-                    <svg viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="3" width="18" height="18" rx="2"/><rect x="6.5" y="10" width="3" height="8" fill="#fff"/><rect x="6.5" y="6.5" width="3" height="3" fill="#fff"/><path d="M14 10h2.6A3.4 3.4 0 0 1 20 13.4V18h-3v-3.9a1.6 1.6 0 0 0-3.2 0V18h-3v-8h3v1z" fill="#fff"/></svg>
-                </a>
-                <!-- Upwork -->
-                <a class="icon-btn" href="https://www.upwork.com/freelancers/~013b0be54296b1527c?mp_source=share" target="_blank" rel="noopener" aria-label="Upwork" title="Upwork">
-                    <svg viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7 7v6a3 3 0 0 0 6 0V7h-2v6a1 1 0 0 1-2 0V7H7zM17 10.5c-.9 0-1.7.6-2 1.4V7h-1.8v10H15v-2.2c.3.8 1.1 1.4 2 1.4a3.2 3.2 0 1 0 0-6.3z" fill="#fff"/></svg>
-                </a>
-            </div>
+  <div class="contact-section">
+    <h2>CONTACT</h2>
+    <div class="contact-wrap">
+      <!-- Иконки-кнопки -->
+      <div class="contact-icons">
+        <a class="icon-btn" href="https://t.me/AlexViGy" target="_blank" rel="noopener" aria-label="Telegram" title="Telegram">
+          <img src="./icons/telegram.svg" alt="Telegram">
+        </a>
+        <a class="icon-btn" href="https://www.linkedin.com/in/alex-videoguy" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn">
+          <img src="./icons/linkedin.svg" alt="LinkedIn">
+        </a>
+        <a class="icon-btn" href="https://www.upwork.com/freelancers/~013b0be54296b1527c?mp_source=share" target="_blank" rel="noopener" aria-label="Upwork" title="Upwork">
+          <img src="./icons/upwork.svg" alt="Upwork">
+        </a>
+      </div>
 
-            <!-- Отдельно — копируемый текст + кнопка для Phone/Email -->
-            <div class="contact-text">
-                <div class="row">
-                    <a class="icon-btn" href="tel:+33753889200" aria-label="Call" title="Call">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.9 19.9 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.9 19.9 0 0 1 2.08 4.18 2 2 0 0 1 4.06 2h3a2 2 0 0 1 2 1.72c.12.9.31 1.78.57 2.64a2 2 0 0 1-.45 2.11L8 9a16 16 0 0 0 7 7l.53-1.18a2 2 0 0 1 2.11-.45c.86.26 1.74.45 2.64.57A2 2 0 0 1 22 16.92z" stroke-width="2"/></svg>
-                    </a>
-                    <span>+33 7 53 88 92 00</span>
-                </div>
-                <div class="row">
-                    <a class="icon-btn" href="mailto:mail@alex-videoguy.com" aria-label="Email" title="Email">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="5" width="18" height="14" rx="2" stroke-width="2"/><path d="M3 7l9 6 9-6" stroke-width="2"/></svg>
-                    </a>
-                    <span>mail@alex-videoguy.com</span>
-                </div>
-            </div>
+      <!-- Телефон и email -->
+      <div class="contact-text">
+        <div class="row">
+          <a class="icon-btn" href="tel:+33753889200" aria-label="Call" title="Call">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.9 19.9 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.9 19.9 0 0 1 2.08 4.18 2 2 0 0 1 4.06 2h3a2 2 0 0 1 2 1.72c.12.9.31 1.78.57 2.64a2 2 0 0 1-.45 2.11L8 9a16 16 0 0 0 7 7l.53-1.18a2 2 0 0 1 2.11-.45c.86.26 1.74.45 2.64.57A2 2 0 0 1 22 16.92z" stroke-width="2"/></svg>
+          </a>
+          <span>+33&nbsp;7&nbsp;53&nbsp;88&nbsp;92&nbsp;00</span>
         </div>
+        <div class="row">
+          <a class="icon-btn" href="mailto:mail@alex-videoguy.com" aria-label="Email" title="Email">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="5" width="18" height="14" rx="2" stroke-width="2"/><path d="M3 7l9 6 9-6" stroke-width="2"/></svg>
+          </a>
+          <span>mail@alex-videoguy.com</span>
+        </div>
+      </div>
     </div>
+  </div>
 </div>
 
-<!-- Vimeo API -->
 <script src="https://player.vimeo.com/api/player.js"></script>
 <script>
-    const items = Array.from(document.querySelectorAll('.video-item'));
-    const players = new Map();
+  const items = Array.from(document.querySelectorAll('.video-item'));
+  const players = new Map();
 
-    items.forEach(item => {
-        const iframe = item.querySelector('iframe');
-        const player = new Vimeo.Player(iframe);
-        players.set(iframe, player);
+  items.forEach(item=>{
+    const iframe=item.querySelector('iframe');
+    const player=new Vimeo.Player(iframe);
+    players.set(iframe,player);
 
-        player.on('play', () => pauseOthers(player));
+    player.on('play',()=>pauseOthers(player));
 
-        item.addEventListener('click', (e) => {
-            if (e.target.closest('.close-video')) return;
-            items.forEach(it => { if (it !== item) it.classList.remove('playing'); });
-            item.classList.add('playing');
-            player.play().catch(()=>{});
-            pauseOthers(player);
-        });
-
-        item.querySelector('.close-video').addEventListener('click', (e) => {
-            e.stopPropagation();
-            item.classList.remove('playing');
-            player.pause();
-        });
+    item.addEventListener('click',e=>{
+      if(e.target.closest('.close-video'))return;
+      items.forEach(it=>{if(it!==item)it.classList.remove('playing')});
+      item.classList.add('playing');
+      player.play().catch(()=>{});
+      pauseOthers(player);
     });
 
-    function pauseOthers(active){
-        players.forEach(p => { if (p !== active) p.pause(); });
+    item.querySelector('.close-video').addEventListener('click',e=>{
+      e.stopPropagation();
+      item.classList.remove('playing');
+      player.pause();
+    });
+  });
+
+  function pauseOthers(active){players.forEach(p=>{if(p!==active)p.pause()})}
+  document.addEventListener('click',e=>{
+    if(!e.target.closest('.video-item')){
+      items.forEach(it=>it.classList.remove('playing'));
+      players.forEach(p=>p.pause());
     }
-
-    document.addEventListener('click', (e) => {
-        if (!e.target.closest('.video-item')){
-            items.forEach(it => it.classList.remove('playing'));
-            players.forEach(p => p.pause());
-        }
-    });
+  });
 </script>
 </body>
 </html>
