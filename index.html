@@ -190,9 +190,9 @@
         </div>
       </div>
 
-      <!-- 11 (anim1) -->
+      <!-- 11 (новое) — превью video11.jpg -->
       <div class="video-item">
-        <div class="video-preview" style="background-image:url('./thumbnails/anim1.jpg');"><div class="play-icon"></div></div>
+        <div class="video-preview" style="background-image:url('./thumbnails/video11.jpg');"><div class="play-icon"></div></div>
         <div class="close-video">×</div>
         <div class="video-iframe-container">
           <iframe src="https://player.vimeo.com/video/1131746186?title=0&byline=0&portrait=0&badge=0&autopause=0&app_id=58479&loop=1"
@@ -202,9 +202,9 @@
         </div>
       </div>
 
-      <!-- 12 (anim2 — вертикальный, будет с letterbox в 16:9 карточке) -->
+      <!-- 12 (новое) — превью video14.jpg -->
       <div class="video-item">
-        <div class="video-preview" style="background-image:url('./thumbnails/anim2.jpg');"><div class="play-icon"></div></div>
+        <div class="video-preview" style="background-image:url('./thumbnails/video14.jpg');"><div class="play-icon"></div></div>
         <div class="close-video">×</div>
         <div class="video-iframe-container">
           <iframe src="https://player.vimeo.com/video/1131746225?title=0&byline=0&portrait=0&badge=0&autopause=0&app_id=58479&loop=1"
@@ -214,9 +214,9 @@
         </div>
       </div>
 
-      <!-- 13 (anim4) -->
+      <!-- 13 (новое) — превью video13.jpg -->
       <div class="video-item">
-        <div class="video-preview" style="background-image:url('./thumbnails/anim4.jpg');"><div class="play-icon"></div></div>
+        <div class="video-preview" style="background-image:url('./thumbnails/video13.jpg');"><div class="play-icon"></div></div>
         <div class="close-video">×</div>
         <div class="video-iframe-container">
           <iframe src="https://player.vimeo.com/video/1131746283?title=0&byline=0&portrait=0&badge=0&autopause=0&app_id=58479&loop=1"
@@ -226,9 +226,9 @@
         </div>
       </div>
 
-      <!-- 14 (anim5) -->
+      <!-- 14 (новое) — превью video12.jpg -->
       <div class="video-item">
-        <div class="video-preview" style="background-image:url('./thumbnails/anim5.jpg');"><div class="play-icon"></div></div>
+        <div class="video-preview" style="background-image:url('./thumbnails/video12.jpg');"><div class="play-icon"></div></div>
         <div class="close-video">×</div>
         <div class="video-iframe-container">
           <iframe src="https://player.vimeo.com/video/1131746302?title=0&byline=0&portrait=0&badge=0&autopause=0&app_id=58479&loop=1"
@@ -244,7 +244,6 @@
   <div class="contact-section">
     <h2>CONTACT</h2>
     <div class="contact-wrap">
-      <!-- Иконки-кнопки без текста -->
       <div class="contact-icons">
         <a class="icon-btn" href="https://t.me/AlexViGy" target="_blank" rel="noopener" aria-label="Telegram" title="Telegram">
           <img src="./icons/Telegram.png" alt="Telegram">
@@ -257,7 +256,6 @@
         </a>
       </div>
 
-      <!-- Телефон и e-mail: кнопка+текст отдельно -->
       <div class="contact-text">
         <div class="row">
           <a class="icon-btn" href="tel:+33753889200" aria-label="Call" title="Call">
@@ -292,7 +290,7 @@
     const player = new Vimeo.Player(iframe);
     players.set(iframe, player);
 
-    // Включаем луп на всякий случай и перезапуск по событию 'ended'
+    // Луп и подстраховка на 'ended'
     player.setLoop(true).catch(()=>{});
     player.on('ended', ()=>{
       player.setCurrentTime(0).then(()=>player.play()).catch(()=>{});
