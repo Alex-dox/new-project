@@ -17,307 +17,261 @@
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             line-height: 1.6;
-            color: #333;
+            color: #202020;
             background-color: #ffffff;
             font-size: 16px;
         }
 
+        a {
+            color: inherit;
+        }
+
         .portfolio-container {
-            max-width: 1200px;
+            max-width: 1100px;
             margin: 0 auto;
-            padding: 60px 20px;
+            padding: 60px 20px 80px;
         }
 
         .portfolio-title {
-            font-size: clamp(3rem, 8vw, 6rem);
-            font-weight: 700;
+            font-size: clamp(3rem, 8vw, 5.5rem);
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            color: #0f172a;
+            margin-bottom: 16px;
             text-align: center;
-            letter-spacing: -0.02em;
-            color: #1a1a1a;
+        }
+
+        .portfolio-tagline {
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.18em;
+            text-align: center;
+            color: #64748b;
+            margin-bottom: 48px;
         }
 
         .main-menu {
             display: flex;
             justify-content: center;
-            margin-bottom: 4rem;
+            margin-bottom: 48px;
         }
+
         .main-menu ul {
             list-style: none;
-            display: flex;
-            gap: 1rem;
+            display: inline-flex;
+            gap: 16px;
         }
-        .main-menu ul li {
-            transition: all 300ms ease;
-        }
-        .main-menu ul li:hover {
-            transform: scale(1.1, 1.1);
-        }
-        .main-menu ul a {
+
+        .main-menu a {
             text-decoration: none;
-            background-color: #1a1a1a;
-            color: white;
-            padding: 0.5rem 0.75rem;
-            transition: all 300ms ease;
+            background: #0f172a;
+            color: #fff;
+            padding: 10px 16px;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            transition: transform 200ms ease, background-color 200ms ease;
+        }
 
+        .main-menu a:hover {
+            transform: translateY(-2px);
+            background-color: #1e293b;
         }
-        .main-menu ul a:hover {
-            background-color: #313131;
-            color: #f0f0f0;
-        }
-        
+
         .section-heading {
-            font-size: clamp(2rem, 4vw, 2.8rem);
+            font-size: 1.25rem;
             font-weight: 700;
-            letter-spacing: -0.02em;
-            margin-bottom: 2rem;
-            color: #1a1a1a;
+            letter-spacing: 0.12em;
+            color: #475569;
+            margin-bottom: 24px;
+            text-align: center;
         }
 
-        .videos-section {
-            margin-bottom: 120px;
-        }
-
-        /* Равномерная сетка */
-        .video-grid {
-           display: grid;
-           grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-           gap: 3rem 2rem;
+        .video-list {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
         }
 
         .video-item-wrapper {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 18px;
+            align-items: start;
+        }
+
+        .video-meta {
             display: flex;
             flex-direction: column;
-            gap: 0.75rem;
+            gap: 10px;
         }
 
-        .video-item-wrapper h3 {
-            font-size: 1.2rem;
+        .project-title {
+            font-size: 1.5rem;
             font-weight: 700;
-            color: #1a1a1a;
+            color: #0f172a;
+            letter-spacing: -0.01em;
         }
 
-        .video-item-wrapper p {
-            color: #555;
+        .project-desc {
+            color: #475569;
         }
 
-        /* Все видео одинакового размера */
+        .badge-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .badge {
+            background: #e2e8f0;
+            color: #0f172a;
+            padding: 6px 10px;
+            border-radius: 0;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+        }
+
         .video-item {
-            overflow: hidden;
             position: relative;
             background: #000;
-            cursor: pointer;
+            overflow: hidden;
             aspect-ratio: 16 / 9;
-            box-shadow: 0 0 5px 0 #cccccc99;
+            cursor: pointer;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
         }
+
         .video-item iframe {
             position: absolute;
-            top: 0;
-            left: 0;
+            inset: 0;
             width: 100%;
             height: 100%;
-            z-index: 20;
             border: none;
+            z-index: 10;
         }
 
-
-        /* Превью с изображением */
         .video-preview {
-            width: 100%;
-            height: 100%;
-            position: relative;
+            position: absolute;
+            inset: 0;
             display: flex;
             align-items: center;
             justify-content: center;
             background-size: cover;
             background-position: center;
-            background-color: #000;
+            background-repeat: no-repeat;
+            z-index: 5;
         }
 
-        /* Темный оверлей на превью */
         .video-preview::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.2);
+            inset: 0;
+            background: linear-gradient(180deg, rgba(0,0,0,0.35), rgba(0,0,0,0.35));
             z-index: 1;
         }
 
-        /* Значок play */
         .play-icon {
-            width: 60px;
-            height: 60px;
-            background-color: rgba(255, 255, 255, 0.9);
+            width: 64px;
+            height: 64px;
+            background: rgba(255, 255, 255, 0.9);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            opacity: 0.7;
-            transition: all 0.3s ease;
             z-index: 2;
             position: relative;
+            transition: transform 200ms ease, opacity 200ms ease;
+            opacity: 0.9;
         }
 
         .play-icon::after {
             content: '';
             width: 0;
             height: 0;
-            border-left: 18px solid #000;
-            border-top: 11px solid transparent;
-            border-bottom: 11px solid transparent;
+            border-left: 18px solid #0f172a;
+            border-top: 12px solid transparent;
+            border-bottom: 12px solid transparent;
             margin-left: 4px;
         }
 
-    
-        .video-item.playing .video-preview {
-            display: none;
+        .video-item:hover .play-icon {
+            transform: scale(1.05);
+            opacity: 1;
         }
 
-        .video-item.playing .video-iframe-container {
-            display: block;
-        }
-
-        /* Закрыть видео при клике вне */
         .close-video {
             position: absolute;
             top: 10px;
             right: 10px;
             width: 30px;
             height: 30px;
-            background: rgba(0, 0, 0, 0.6);
-            border-radius: 50%;
-            cursor: pointer;
-            z-index: 30;
+            background: rgba(0, 0, 0, 0.65);
+            color: white;
+            font-size: 20px;
             display: none;
             align-items: center;
             justify-content: center;
-            color: white;
-            font-size: 20px;
-            opacity: 0;
-            transition: opacity 0.3s ease;
+            z-index: 20;
+            cursor: pointer;
         }
 
         .video-item.playing .close-video {
             display: flex;
         }
 
-        .video-item.playing .close-video:hover {
-            opacity: 1;
+        .video-item.playing .video-preview {
+            display: none;
         }
 
         .contact-section {
+            margin-top: 80px;
             text-align: center;
-            padding: 60px 0;
-            border-top: 1px solid #eee;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 48px;
         }
 
-        .contact-section h2 {
-            font-size: clamp(2rem, 5vw, 3rem);
-            font-weight: 600;
-            margin-bottom: 40px;
-            color: #1a1a1a;
-            letter-spacing: -0.02em;
+        .contact-heading {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            color: #0f172a;
+            margin-bottom: 24px;
         }
 
-        .contact-info {
+        .contact-grid {
             display: flex;
             flex-direction: column;
-            gap: 15px;
-            max-width: 400px;
-            margin: 0 auto;
-        }
-
-        .contact-info a {
-            color: #2563eb;
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
-
-        .contact-info a:hover {
-            color: #1d4ed8;
-            text-decoration: underline;
+            gap: 14px;
+            align-items: center;
         }
 
         .contact-row {
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            justify-content: center;
-            color: #333;
+            color: #0f172a;
+            font-weight: 600;
+            letter-spacing: 0.01em;
         }
 
         .contact-row img {
-            width: 24px;
-            height: 24px;
+            width: 26px;
+            height: 26px;
             object-fit: contain;
         }
 
-        @media (max-width: 1024px) {
-            .video-grid {
-                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-                gap: 24px;
-            }
+        .contact-row a {
+            text-decoration: none;
+            color: #0f172a;
         }
 
         @media (max-width: 768px) {
             .portfolio-container {
-                padding: 40px 15px;
+                padding: 40px 16px 60px;
             }
 
-            .portfolio-title {
-                margin-bottom: 60px;
-            }
-
-            .videos-section {
-                margin-bottom: 80px;
-            }
-
-            .play-icon {
-                width: 40px;
-                height: 40px;
-            }
-
-            .contact-section {
-                padding: 40px 0;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .portfolio-container {
-                padding: 30px 10px;
-            }
-
-            .video-grid {
+            .video-item-wrapper {
                 grid-template-columns: 1fr;
-                gap: 18px;
-            }
-        }
-
-        @media (prefers-reduced-motion: no-preference) {
-            .portfolio-title {
-                animation: fadeInUp 1s ease-out;
-            }
-
-            .video-item {
-                animation: fadeInUp 1s ease-out;
-            }
-
-            .contact-section {
-                animation: fadeInUp 1s ease-out 0.3s both;
-            }
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
             }
         }
     </style>
@@ -325,190 +279,230 @@
 <body>
     <div class="portfolio-container">
         <h1 class="portfolio-title">OLEKSANDR SLIESARIEV</h1>
+        <p class="portfolio-tagline">Film Editor</p>
         <div class="main-menu">
             <ul>
                 <li><a href="#projects">PROJECTS</a></li>
                 <li><a href="#contact">CONTACT</a></li>
             </ul>
         </div>
-        
+
         <h2 id="projects" class="section-heading">PROJECTS</h2>
-        <div class="videos-section">
-            <div class="video-grid">
-                <!-- Video 1 -->
-                <div class="video-item-wrapper">
-                    <h3>Saudia Arabia - Get the job!</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis voluptates, error mollitia eaque perspiciatis sunt deleniti! Aut, a, debitis enim aliquid labore libero fugiat maiores, mollitia ullam asperiores esse tenetur?</p>
-                    <div class="video-item">
-                        <iframe src="https://player.vimeo.com/video/1126781538?badge=0&autopause=0&player_id=0&app_id=58479" 
-                                allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" 
-                                referrerpolicy="strict-origin-when-cross-origin" 
-                                title="WVB Explainer">
-                        </iframe>
+        <div class="video-list">
+            <div class="video-item-wrapper">
+                <div class="video-meta">
+                    <h3 class="project-title">Saudia Arabia - Get the job!</h3>
+                    <p class="project-desc">Campaign spot highlighting opportunities in Saudia Arabia with energetic pacing and bold typography.</p>
+                    <div class="badge-row">
+                        <span class="badge">Promo</span>
+                        <span class="badge">Story-driven</span>
                     </div>
                 </div>
+                <div class="video-item">
+                    <div class="video-preview" style="background-image: url('thumbnails/video1.jpg');">
+                        <div class="play-icon"></div>
+                    </div>
+                    <div class="close-video">×</div>
+                    <iframe src="https://player.vimeo.com/video/1126781538?badge=0&autopause=0&player_id=0&app_id=58479"
+                            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+                            referrerpolicy="strict-origin-when-cross-origin"
+                            title="WVB Explainer"></iframe>
+                </div>
+            </div>
 
-                <!-- Video 2 -->
-                <div class="video-item-wrapper">
-                    <h3>Pulse Promo</h3>
-                    <div class="video-item">
-                        <div class="video-preview" style="background-image: url('https://vumbnail.com/1126781301.jpg');">
-                            <div class="play-icon"></div>
-                        </div>
-                        <div class="close-video">×</div>
-                        <div class="video-iframe-container">
-                            <iframe src="https://player.vimeo.com/video/1126781301?badge=0&autopause=0&player_id=0&app_id=58479" 
-                                    allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" 
-                                    referrerpolicy="strict-origin-when-cross-origin" 
-                                    title="Pulse Promo">
-                            </iframe>
-                        </div>
+            <div class="video-item-wrapper">
+                <div class="video-meta">
+                    <h3 class="project-title">Pulse Promo</h3>
+                    <p class="project-desc">Fast-cut piece mixing interface visuals and live moments for an upbeat product teaser.</p>
+                    <div class="badge-row">
+                        <span class="badge">Teaser</span>
+                        <span class="badge">Motion</span>
                     </div>
                 </div>
+                <div class="video-item">
+                    <div class="video-preview" style="background-image: url('thumbnails/video2.jpg');">
+                        <div class="play-icon"></div>
+                    </div>
+                    <div class="close-video">×</div>
+                    <iframe src="https://player.vimeo.com/video/1126781301?badge=0&autopause=0&player_id=0&app_id=58479"
+                            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+                            referrerpolicy="strict-origin-when-cross-origin"
+                            title="Pulse Promo"></iframe>
+                </div>
+            </div>
 
-                <!-- Video 3 -->
-                <div class="video-item-wrapper">
-                    <h3>Pulsar</h3>
-                    <div class="video-item">
-                        <div class="video-preview" style="background-image: url('https://vumbnail.com/1126781752.jpg');">
-                            <div class="play-icon"></div>
-                        </div>
-                        <div class="close-video">×</div>
-                        <div class="video-iframe-container">
-                            <iframe src="https://player.vimeo.com/video/1126781752?badge=0&autopause=0&player_id=0&app_id=58479" 
-                                    allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" 
-                                    referrerpolicy="strict-origin-when-cross-origin" 
-                                    title="Pulsar">
-                            </iframe>
-                        </div>
+            <div class="video-item-wrapper">
+                <div class="video-meta">
+                    <h3 class="project-title">Pulsar</h3>
+                    <p class="project-desc">Stylized spot with slick UI captures and bold neon color blocking for a technology brand.</p>
+                    <div class="badge-row">
+                        <span class="badge">Tech</span>
+                        <span class="badge">UI</span>
                     </div>
                 </div>
+                <div class="video-item">
+                    <div class="video-preview" style="background-image: url('thumbnails/video3.jpg');">
+                        <div class="play-icon"></div>
+                    </div>
+                    <div class="close-video">×</div>
+                    <iframe src="https://player.vimeo.com/video/1126781752?badge=0&autopause=0&player_id=0&app_id=58479"
+                            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+                            referrerpolicy="strict-origin-when-cross-origin"
+                            title="Pulsar"></iframe>
+                </div>
+            </div>
 
-                <!-- Video 4 -->
-                <div class="video-item-wrapper">
-                    <h3>Art Promo</h3>
-                    <div class="video-item">
-                        <iframe src="https://player.vimeo.com/video/1126781589?badge=0&autopause=0&player_id=0&app_id=58479" 
-                                allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" 
-                                referrerpolicy="strict-origin-when-cross-origin" 
-                                title="Art Promo">
-                        </iframe>
+            <div class="video-item-wrapper">
+                <div class="video-meta">
+                    <h3 class="project-title">Art Promo</h3>
+                    <p class="project-desc">Minimalist art-driven promo featuring clean typography and steady pacing.</p>
+                    <div class="badge-row">
+                        <span class="badge">Art</span>
+                        <span class="badge">Minimal</span>
                     </div>
                 </div>
+                <div class="video-item">
+                    <div class="video-preview" style="background-image: url('thumbnails/video4.jpg');">
+                        <div class="play-icon"></div>
+                    </div>
+                    <div class="close-video">×</div>
+                    <iframe src="https://player.vimeo.com/video/1126781589?badge=0&autopause=0&player_id=0&app_id=58479"
+                            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+                            referrerpolicy="strict-origin-when-cross-origin"
+                            title="Art Promo"></iframe>
+                </div>
+            </div>
 
-                <!-- Video 5 -->
-                <div class="video-item-wrapper">
-                    <h3>WVB Promo</h3>
-                    <div class="video-item">
-                        <div class="video-preview" style="background-image: url('https://vumbnail.com/1126782138.jpg');">
-                            <div class="play-icon"></div>
-                        </div>
-                        <div class="close-video">×</div>
-                        <div class="video-iframe-container">
-                            <iframe src="https://player.vimeo.com/video/1126782138?badge=0&autopause=0&player_id=0&app_id=58479" 
-                                    allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" 
-                                    referrerpolicy="strict-origin-when-cross-origin" 
-                                    title="WVB Promo">
-                            </iframe>
-                        </div>
+            <div class="video-item-wrapper">
+                <div class="video-meta">
+                    <h3 class="project-title">WVB Promo</h3>
+                    <p class="project-desc">Bold brand anthem with kinetic typography and energetic transitions.</p>
+                    <div class="badge-row">
+                        <span class="badge">Brand</span>
+                        <span class="badge">Energetic</span>
                     </div>
                 </div>
+                <div class="video-item">
+                    <div class="video-preview" style="background-image: url('thumbnails/video5.jpg');">
+                        <div class="play-icon"></div>
+                    </div>
+                    <div class="close-video">×</div>
+                    <iframe src="https://player.vimeo.com/video/1126782138?badge=0&autopause=0&player_id=0&app_id=58479"
+                            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+                            referrerpolicy="strict-origin-when-cross-origin"
+                            title="WVB Promo"></iframe>
+                </div>
+            </div>
 
-                <!-- Video 6 -->
-                <div class="video-item-wrapper">
-                    <h3>WVB</h3>
-                    <div class="video-item">
-                        <div class="video-preview" style="background-image: url('https://vumbnail.com/1126782054.jpg');">
-                            <div class="play-icon"></div>
-                        </div>
-                        <div class="close-video">×</div>
-                        <div class="video-iframe-container">
-                            <iframe src="https://player.vimeo.com/video/1126782054?badge=0&autopause=0&player_id=0&app_id=58479" 
-                                    allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" 
-                                    referrerpolicy="strict-origin-when-cross-origin" 
-                                    title="WVB">
-                            </iframe>
-                        </div>
+            <div class="video-item-wrapper">
+                <div class="video-meta">
+                    <h3 class="project-title">WVB</h3>
+                    <p class="project-desc">Showcase edit mixing live action, graphics, and bold color accents.</p>
+                    <div class="badge-row">
+                        <span class="badge">Showreel</span>
+                        <span class="badge">Color</span>
                     </div>
                 </div>
+                <div class="video-item">
+                    <div class="video-preview" style="background-image: url('thumbnails/video6.jpg');">
+                        <div class="play-icon"></div>
+                    </div>
+                    <div class="close-video">×</div>
+                    <iframe src="https://player.vimeo.com/video/1126782054?badge=0&autopause=0&player_id=0&app_id=58479"
+                            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+                            referrerpolicy="strict-origin-when-cross-origin"
+                            title="WVB"></iframe>
+                </div>
+            </div>
 
-                <!-- Video 7 -->
-                <div class="video-item-wrapper">
-                    <h3>Small ad</h3>
-                    <div class="video-item">
-                        <div class="video-preview" style="background-image: url('https://vumbnail.com/1126782179.jpg');">
-                            <div class="play-icon"></div>
-                        </div>
-                        <div class="close-video">×</div>
-                        <div class="video-iframe-container">
-                            <iframe src="https://player.vimeo.com/video/1126782179?badge=0&autopause=0&player_id=0&app_id=58479" 
-                                    allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" 
-                                    referrerpolicy="strict-origin-when-cross-origin" 
-                                    title="Small ad">
-                            </iframe>
-                        </div>
+            <div class="video-item-wrapper">
+                <div class="video-meta">
+                    <h3 class="project-title">Small ad</h3>
+                    <p class="project-desc">Concise social-first edit with quick cuts and product focus.</p>
+                    <div class="badge-row">
+                        <span class="badge">Social</span>
+                        <span class="badge">Product</span>
                     </div>
                 </div>
+                <div class="video-item">
+                    <div class="video-preview" style="background-image: url('thumbnails/video7.jpg');">
+                        <div class="play-icon"></div>
+                    </div>
+                    <div class="close-video">×</div>
+                    <iframe src="https://player.vimeo.com/video/1126782179?badge=0&autopause=0&player_id=0&app_id=58479"
+                            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+                            referrerpolicy="strict-origin-when-cross-origin"
+                            title="Small ad"></iframe>
+                </div>
+            </div>
 
-                <!-- Video 8 -->
-                <div class="video-item-wrapper">
-                    <h3>Promo</h3>
-                    <div class="video-item">
-                        <div class="video-preview" style="background-image: url('https://vumbnail.com/1126782216.jpg');">
-                            <div class="play-icon"></div>
-                        </div>
-                        <div class="close-video">×</div>
-                        <div class="video-iframe-container">
-                            <iframe src="https://player.vimeo.com/video/1126782216?badge=0&autopause=0&player_id=0&app_id=58479" 
-                                    allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" 
-                                    referrerpolicy="strict-origin-when-cross-origin" 
-                                    title="Promo">
-                            </iframe>
-                        </div>
+            <div class="video-item-wrapper">
+                <div class="video-meta">
+                    <h3 class="project-title">Promo</h3>
+                    <p class="project-desc">High-impact promo blending close-ups and macro product shots.</p>
+                    <div class="badge-row">
+                        <span class="badge">Promo</span>
+                        <span class="badge">Macro</span>
                     </div>
                 </div>
+                <div class="video-item">
+                    <div class="video-preview" style="background-image: url('thumbnails/video8.jpg');">
+                        <div class="play-icon"></div>
+                    </div>
+                    <div class="close-video">×</div>
+                    <iframe src="https://player.vimeo.com/video/1126782216?badge=0&autopause=0&player_id=0&app_id=58479"
+                            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+                            referrerpolicy="strict-origin-when-cross-origin"
+                            title="Promo"></iframe>
+                </div>
+            </div>
 
-                <!-- Video 9 -->
-                <div class="video-item-wrapper">
-                    <h3>Corporate template</h3>
-                    <div class="video-item">
-                        <div class="video-preview" style="background-image: url('https://vumbnail.com/1126782307.jpg');">
-                            <div class="play-icon"></div>
-                        </div>
-                        <div class="close-video">×</div>
-                        <div class="video-iframe-container">
-                            <iframe src="https://player.vimeo.com/video/1126782307?badge=0&autopause=0&player_id=0&app_id=58479" 
-                                    allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" 
-                                    referrerpolicy="strict-origin-when-cross-origin" 
-                                    title="Corporate template">
-                            </iframe>
-                        </div>
+            <div class="video-item-wrapper">
+                <div class="video-meta">
+                    <h3 class="project-title">Corporate template</h3>
+                    <p class="project-desc">Corporate communication cut with clean branding and modern overlays.</p>
+                    <div class="badge-row">
+                        <span class="badge">Corporate</span>
+                        <span class="badge">Clean</span>
                     </div>
                 </div>
-
-                <!-- Video 10 -->
-                <div class="video-item-wrapper">
-                    <h3>Art Promo</h3>
-                    <div class="video-item">
-                        <div class="video-preview" style="background-image: url('https://vumbnail.com/1126782264.jpg');">
-                            <div class="play-icon"></div>
-                        </div>
-                        <div class="close-video">×</div>
-                        <div class="video-iframe-container">
-                            <iframe src="https://player.vimeo.com/video/1126782264?badge=0&autopause=0&player_id=0&app_id=58479" 
-                                    allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" 
-                                    referrerpolicy="strict-origin-when-cross-origin" 
-                                    title="Art Promo">
-                            </iframe>
-                        </div>
+                <div class="video-item">
+                    <div class="video-preview" style="background-image: url('thumbnails/video9.jpg');">
+                        <div class="play-icon"></div>
                     </div>
+                    <div class="close-video">×</div>
+                    <iframe src="https://player.vimeo.com/video/1126782307?badge=0&autopause=0&player_id=0&app_id=58479"
+                            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+                            referrerpolicy="strict-origin-when-cross-origin"
+                            title="Corporate template"></iframe>
+                </div>
+            </div>
+
+            <div class="video-item-wrapper">
+                <div class="video-meta">
+                    <h3 class="project-title">Art Promo</h3>
+                    <p class="project-desc">Elegant, minimal promo focused on typography, pace, and composition.</p>
+                    <div class="badge-row">
+                        <span class="badge">Minimal</span>
+                        <span class="badge">Typography</span>
+                    </div>
+                </div>
+                <div class="video-item">
+                    <div class="video-preview" style="background-image: url('thumbnails/video10.jpg');">
+                        <div class="play-icon"></div>
+                    </div>
+                    <div class="close-video">×</div>
+                    <iframe src="https://player.vimeo.com/video/1126782264?badge=0&autopause=0&player_id=0&app_id=58479"
+                            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+                            referrerpolicy="strict-origin-when-cross-origin"
+                            title="Art Promo"></iframe>
                 </div>
             </div>
         </div>
-        
-        <div class="contact-section">
-            <h2 id="contact">CONTACT</h2>
-            <div class="contact-info">
+
+        <div id="contact" class="contact-section">
+            <h3 class="contact-heading">CONTACT</h3>
+            <div class="contact-grid">
                 <div class="contact-row">
                     <img src="icons/Telegram.png" alt="Telegram icon">
                     <a href="https://t.me/your-telegram" target="_blank" rel="noopener">@your-telegram</a>
@@ -528,13 +522,12 @@
             </div>
         </div>
     </div>
-    
+
     <script src="https://player.vimeo.com/api/player.js"></script>
     <script>
         const players = [];
         const videoItems = Array.from(document.querySelectorAll('.video-item'));
 
-        // Initialize players and pause others on play
         videoItems.forEach((item, index) => {
             const iframe = item.querySelector('iframe');
             const player = new Vimeo.Player(iframe);
@@ -543,29 +536,34 @@
             const preview = item.querySelector('.video-preview');
             const closeBtn = item.querySelector('.close-video');
 
+            const togglePlayState = (shouldPlay) => {
+                if (shouldPlay) {
+                    player.play();
+                } else {
+                    player.pause();
+                }
+            };
+
             if (preview) {
                 preview.addEventListener('click', (e) => {
                     e.stopPropagation();
                     item.classList.add('playing');
-                    player.play();
+                    togglePlayState(true);
                 });
             }
 
             if (closeBtn) {
                 closeBtn.addEventListener('click', (e) => {
                     e.stopPropagation();
-                    player.pause();
                     item.classList.remove('playing');
+                    togglePlayState(false);
                 });
             }
 
             item.addEventListener('click', () => {
-                const isPlaying = item.classList.toggle('playing');
-                if (isPlaying) {
-                    player.play();
-                } else {
-                    player.pause();
-                }
+                const isActive = item.classList.contains('playing');
+                item.classList.toggle('playing', !isActive);
+                togglePlayState(!isActive);
             });
 
             player.on('play', () => {
@@ -579,8 +577,7 @@
             });
         });
 
-        // Закрыть видео при клике вне плеера
-        document.addEventListener('click', function(e) {
+        document.addEventListener('click', (e) => {
             if (!e.target.closest('.video-item')) {
                 players.forEach((player, index) => {
                     player.pause();
