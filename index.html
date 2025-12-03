@@ -216,21 +216,30 @@
             margin: 0 auto;
         }
 
-        .contact-info p {
-            font-size: 1.1rem;
-            color: #666;
-        }
-
-        .contact-info a {
-            color: #2563eb;
+        .contact-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            justify-content: center;
             text-decoration: none;
+            color: #1a1a1a;
             font-weight: 500;
-            transition: color 0.3s ease;
+            padding: 10px 14px;
+            border: 1px solid #e5e5e5;
+            border-radius: 12px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            background-color: #fafafa;
         }
 
-        .contact-info a:hover {
-            color: #1d4ed8;
-            text-decoration: underline;
+        .contact-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+        }
+
+        .contact-icon {
+            width: 28px;
+            height: 28px;
+            object-fit: contain;
         }
 
         /* Адаптивность */
@@ -321,12 +330,10 @@
         <div class="videos-section">
             <div class="video-grid">
                 <!-- Video 1 -->
-                <h3>Saudia Arabia - Get the job!</h3>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis voluptates, error mollitia eaque perspiciatis sunt deleniti! Aut, a, debitis enim aliquid labore libero fugiat maiores, mollitia ullam asperiores esse tenetur?</p>
                 <div class="video-item">
-                    <iframe src="https://player.vimeo.com/video/1126781538?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" 
-                            frameborder="0" 
-                            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" 
+                    <iframe src="https://player.vimeo.com/video/1126781538?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+                            frameborder="0"
+                            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
                             referrerpolicy="strict-origin-when-cross-origin" 
                             title="WVB Explainer">
                     </iframe>
@@ -475,44 +482,82 @@
         <div class="contact-section">
             <h2 id="contact">CONTACT</h2>
             <div class="contact-info">
-                <p>Email: <a href="mailto:your-email@example.com">your-email@example.com</a></p>
-                <p>Phone: <a href="tel:+1234567890">+1 (234) 567-890</a></p>
-                <p>Vimeo: <a href="https://vimeo.com/your-username" target="_blank">vimeo.com/your-username</a></p>
+                <a class="contact-link" href="https://www.linkedin.com" target="_blank" rel="noreferrer">
+                    <img class="contact-icon" src="icons/Linkedin.png" alt="LinkedIn icon">
+                    LinkedIn
+                </a>
+                <a class="contact-link" href="https://t.me" target="_blank" rel="noreferrer">
+                    <img class="contact-icon" src="icons/Telegram.png" alt="Telegram icon">
+                    Telegram
+                </a>
+                <a class="contact-link" href="https://www.upwork.com" target="_blank" rel="noreferrer">
+                    <img class="contact-icon" src="icons/Upwork.png" alt="Upwork icon">
+                    Upwork
+                </a>
             </div>
         </div>
     </div>
     
     <script src="https://player.vimeo.com/api/player.js"></script>
     <script>
-        // Обработка клика на видео
-        document.querySelectorAll('.video-item').forEach(item => {
-            item.addEventListener('click', function() {
-                // Закрыть все открытые видео
-                document.querySelectorAll('.video-item.playing').forEach(playing => {
-                    if (playing !== this) {
-                        playing.classList.remove('playing');
-                    }
-                });
-                
-                // Открыть/закрыть текущее видео
-                this.classList.toggle('playing');
-            });
+        const videoItems = document.querySelectorAll('.video-item');
+        const players = new Map();
 
-            // Обработка клика на кнопку закрытия
+        videoItems.forEach(item => {
+            const iframe = item.querySelector('iframe');
+            if (iframe) {
+                players.set(item, new Vimeo.Player(iframe));
+            }
+
             const closeBtn = item.querySelector('.close-video');
             if (closeBtn) {
-                closeBtn.addEventListener('click', function(e) {
+                closeBtn.addEventListener('click', function (e) {
                     e.stopPropagation();
                     item.classList.remove('playing');
+                    const player = players.get(item);
+                    if (player) {
+                        player.pause();
+                    }
                 });
             }
+
+            item.addEventListener('click', function (event) {
+                if (event.target.closest('.close-video')) {
+                    return;
+                }
+
+                videoItems.forEach(other => {
+                    if (other !== item) {
+                        other.classList.remove('playing');
+                        const otherPlayer = players.get(other);
+                        if (otherPlayer) {
+                            otherPlayer.pause();
+                        }
+                    }
+                });
+
+                const isPlaying = item.classList.contains('playing');
+                item.classList.toggle('playing');
+
+                const player = players.get(item);
+                if (player) {
+                    if (isPlaying) {
+                        player.pause();
+                    } else {
+                        player.play();
+                    }
+                }
+            });
         });
 
-        // Закрыть видео при клике вне плеера
-        document.addEventListener('click', function(e) {
+        document.addEventListener('click', function (e) {
             if (!e.target.closest('.video-item')) {
-                document.querySelectorAll('.video-item.playing').forEach(playing => {
-                    playing.classList.remove('playing');
+                videoItems.forEach(item => {
+                    item.classList.remove('playing');
+                    const player = players.get(item);
+                    if (player) {
+                        player.pause();
+                    }
                 });
             }
         });
