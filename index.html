@@ -1,332 +1,521 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Portfolio</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    *{margin:0;padding:0;box-sizing:border-box}
-    body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;line-height:1.6;color:#111;background:#fff;font-size:16px}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Базовые стили */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    .portfolio-container{max-width:1400px;margin:0 auto;padding:60px 20px}
-    .portfolio-title{font-size:clamp(3rem,8vw,6rem);font-weight:800;text-align:center;margin-bottom:80px;letter-spacing:-.02em;color:#1a1a1a}
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #ffffff;
+            font-size: 16px;
+        }
 
-    .videos-section{margin-bottom:120px}
-    .video-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+        /* Контейнер портфолио */
+        .portfolio-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
 
-    .video-item{position:relative;background:#000;border-radius:16px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,.08);transition:transform .25s ease, box-shadow .25s ease;cursor:pointer;aspect-ratio:16/9}
-    .video-item:hover{transform:translateY(-2px);box-shadow:0 18px 40px rgba(0,0,0,.16)}
-    .video-item:hover .play-icon{opacity:1;transform:scale(1.05)}
+        /* Заголовок портфолио */
+        .portfolio-title {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 700;
+            text-align: center;
+            letter-spacing: -0.02em;
+            color: #1a1a1a;
+        }
 
-    .video-preview{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background-size:cover;background-position:center;background-color:#000}
-    .video-preview::before{content:'';position:absolute;inset:0;background:rgba(0,0,0,.18);z-index:1}
+        .main-menu {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 4rem;
+        }
+        .main-menu ul {
+            list-style: none;
+            display: flex;
+            gap: 1rem;
+        }
+        .main-menu ul li {
+            transition: all 300ms ease;
+        }
+        .main-menu ul li:hover {
+            transform: scale(1.1, 1.1);
+        }
+        .main-menu ul a {
+            text-decoration: none;
+            background-color: #1a1a1a;
+            color: white;
+            padding: 0.5rem 0.75rem;
+            transition: all 300ms ease;
 
-    .play-icon{width:64px;height:64px;background:rgba(255,255,255,.92);border-radius:50%;display:flex;align-items:center;justify-content:center;opacity:.8;transition:.25s ease;z-index:2;position:relative;box-shadow:0 4px 14px rgba(0,0,0,.18)}
-    .play-icon::after{content:'';width:0;height:0;border-left:18px solid #000;border-top:11px solid transparent;border-bottom:11px solid transparent;margin-left:4px}
+        }
+        .main-menu ul a:hover {
+            background-color: #313131;
+            color: #f0f0f0;
+        }
+        
+        /* Секция видео */
+        .videos-section {
+            margin-bottom: 120px;
+        }
 
-    .video-iframe-container{display:none;position:absolute;inset:0;z-index:20}
-    .video-iframe-container iframe{width:100%;height:100%;border:0}
-    .video-item.playing .video-preview{display:none}
-    .video-item.playing .video-iframe-container{display:block}
+        /* Простая равномерная сетка - 3 колонки */
+        .video-grid {
+           display: grid;
+           grid-template-columns: repeat(3, 1fr);
+           gap: 3rem;
+        }
 
-    .close-video{position:absolute;top:10px;right:10px;width:32px;height:32px;background:rgba(0,0,0,.6);border-radius:50%;color:#fff;font-size:20px;display:none;align-items:center;justify-content:center;z-index:30;opacity:.95;cursor:pointer}
-    .video-item.playing .close-video{display:flex}
+        /* Все видео одинакового размера */
+        .video-item {
+            overflow: hidden;
+            position: relative;
+            background: #000;
+            cursor: pointer;
+            aspect-ratio: 16 / 9;
+            box-shadow: 0 0 5px 0 #cccccc99;
+        }
+        .video-item iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 20;
+        }
 
-    /* CONTACT */
-    .contact-section{padding:60px 0;border-top:1px solid #eee;text-align:center}
-    .contact-section h2{font-size:clamp(2rem,5vw,3rem);font-weight:700;margin-bottom:24px;color:#1a1a1a;letter-spacing:-.01em}
 
-    .contact-wrap{display:flex;flex-direction:column;align-items:center;gap:18px}
+        /* Превью с изображением */
+        .video-preview {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-size: cover;
+            background-position: center;
+            background-color: #000;
+        }
 
-    /* Иконки-кнопки (PNG) */
-    .contact-icons{display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
-    .icon-btn{
-      width:48px;height:48px;border-radius:999px;background:#fff;border:1px solid #e6e6e6;
-      display:inline-flex;align-items:center;justify-content:center;text-decoration:none;
-      transition:transform .15s ease, box-shadow .15s ease, background .15s ease;
-      box-shadow:0 6px 16px rgba(17,24,39,.06);
-    }
-    .icon-btn:hover{transform:translateY(-1px);background:#fafafa;box-shadow:0 10px 22px rgba(17,24,39,.10)}
-    .icon-btn img{width:22px;height:22px;display:block;object-fit:contain}
+        /* Темный оверлей на превью */
+        .video-preview::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
 
-    /* Телефон и e-mail: отдельная кнопка + копируемый текст */
-    .contact-text{display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
-    .contact-text .row{
-      display:flex;align-items:center;gap:10px;padding:10px 14px;border:1px solid #e6e6e6;border-radius:999px;background:#fff;
-      box-shadow:0 6px 16px rgba(17,24,39,.06)
-    }
-    .contact-text .row span{user-select:text}
+        /* Значок play */
+        .play-icon {
+            width: 60px;
+            height: 60px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0.7;
+            transition: all 0.3s ease;
+            z-index: 2;
+            position: relative;
+        }
 
-    /* RWD */
-    @media (max-width:1024px){.video-grid{grid-template-columns:repeat(2,1fr);gap:16px}}
-    @media (max-width:768px){
-      .portfolio-container{padding:40px 16px}
-      .portfolio-title{margin-bottom:56px}
-      .videos-section{margin-bottom:72px}
-      .video-grid{grid-template-columns:repeat(2,1fr);gap:12px}
-      .play-icon{width:48px;height:48px}
-      .contact-section{padding:44px 0}
-    }
-    @media (max-width:480px){.video-grid{grid-template-columns:1fr;gap:10px}}
-  </style>
+        .play-icon::after {
+            content: '';
+            width: 0;
+            height: 0;
+            border-left: 18px solid #000;
+            border-top: 11px solid transparent;
+            border-bottom: 11px solid transparent;
+            margin-left: 4px;
+        }
+
+        .video-iframe-container {
+            display: none;
+            position: absolute;
+            inset: 0;
+            z-index: 20;
+        }
+
+        .video-item.playing .video-preview {
+            display: none;
+        }
+
+        .video-item.playing .video-iframe-container {
+            display: block;
+        }
+
+        /* Закрыть видео при клике вне */
+        .close-video {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 30px;
+            height: 30px;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 30;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .video-item.playing .close-video {
+            display: flex;
+            opacity: 0.8;
+        }
+
+        .video-item.playing .close-video:hover {
+            opacity: 1;
+        }
+
+        /* Секция контактов */
+        .contact-section {
+            text-align: center;
+            padding: 60px 0;
+            border-top: 1px solid #eee;
+        }
+
+        .contact-section h2 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 600;
+            margin-bottom: 40px;
+            color: #1a1a1a;
+            letter-spacing: -0.02em;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .contact-info p {
+            font-size: 1.1rem;
+            color: #666;
+        }
+
+        .contact-info a {
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .contact-info a:hover {
+            color: #1d4ed8;
+            text-decoration: underline;
+        }
+
+        /* Адаптивность */
+        @media (max-width: 1024px) {
+            .video-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .portfolio-container {
+                padding: 40px 15px;
+            }
+
+            .portfolio-title {
+                margin-bottom: 60px;
+            }
+
+            .videos-section {
+                margin-bottom: 80px;
+            }
+
+            .video-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+
+            .play-icon {
+                width: 40px;
+                height: 40px;
+            }
+
+            .contact-section {
+                padding: 40px 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .portfolio-container {
+                padding: 30px 10px;
+            }
+
+            .video-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+        }
+
+        /* Анимации */
+        @media (prefers-reduced-motion: no-preference) {
+            .portfolio-title {
+                animation: fadeInUp 1s ease-out;
+            }
+
+            .video-item {
+                animation: fadeInUp 1s ease-out;
+            }
+
+            .contact-section {
+                animation: fadeInUp 1s ease-out 0.3s both;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
 </head>
 <body>
-<div class="portfolio-container">
-  <h1 class="portfolio-title">PORTFOLIO</h1>
+    <div class="portfolio-container">
+        <h1 class="portfolio-title">OLEKSANDR SLIESARIEV</h1>
+        <div class="main-menu">
+            <ul>
+                <li><a href="#projects">PROJECTS</a></li>
+                <li><a href="#contact">CONTACT</a></li>
+            </ul>
+        </div>
+        
+        <h2 id="projects">PROJECTS</h2>
+        <div class="videos-section">
+            <div class="video-grid">
+                <!-- Video 1 -->
+                <h3>Saudia Arabia - Get the job!</h3>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis voluptates, error mollitia eaque perspiciatis sunt deleniti! Aut, a, debitis enim aliquid labore libero fugiat maiores, mollitia ullam asperiores esse tenetur?</p>
+                <div class="video-item">
+                    <iframe src="https://player.vimeo.com/video/1126781538?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" 
+                            frameborder="0" 
+                            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" 
+                            referrerpolicy="strict-origin-when-cross-origin" 
+                            title="WVB Explainer">
+                    </iframe>
+                </div>
 
-  <div class="videos-section">
-    <div class="video-grid">
-      <!-- 1 -->
-      <div class="video-item">
-        <div class="video-preview" style="background-image:url('./thumbnails/video1.jpg');"><div class="play-icon"></div></div>
-        <div class="close-video">×</div>
-        <div class="video-iframe-container">
-          <iframe src="https://player.vimeo.com/video/1126781538?autopause=0&app_id=58479&loop=1"
-                  allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-                  referrerpolicy="strict-origin-when-cross-origin" title="WVB Explainer"
-                  webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-        </div>
-      </div>
-      <!-- 2 -->
-      <div class="video-item">
-        <div class="video-preview" style="background-image:url('./thumbnails/video2.jpg');"><div class="play-icon"></div></div>
-        <div class="close-video">×</div>
-        <div class="video-iframe-container">
-          <iframe src="https://player.vimeo.com/video/1126781301?autopause=0&app_id=58479&loop=1"
-                  allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-                  referrerpolicy="strict-origin-when-cross-origin" title="Pulse Promo"
-                  webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-        </div>
-      </div>
-      <!-- 3 -->
-      <div class="video-item">
-        <div class="video-preview" style="background-image:url('./thumbnails/video3.jpg');"><div class="play-icon"></div></div>
-        <div class="close-video">×</div>
-        <div class="video-iframe-container">
-          <iframe src="https://player.vimeo.com/video/1126781752?autopause=0&app_id=58479&loop=1"
-                  allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-                  referrerpolicy="strict-origin-when-cross-origin" title="Pulsar"
-                  webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-        </div>
-      </div>
-      <!-- 4 -->
-      <div class="video-item">
-        <div class="video-preview" style="background-image:url('./thumbnails/video4.jpg');"><div class="play-icon"></div></div>
-        <div class="close-video">×</div>
-        <div class="video-iframe-container">
-          <iframe src="https://player.vimeo.com/video/1126781589?autopause=0&app_id=58479&loop=1"
-                  allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-                  referrerpolicy="strict-origin-when-cross-origin" title="Art Promo"
-                  webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-        </div>
-      </div>
-      <!-- 5 -->
-      <div class="video-item">
-        <div class="video-preview" style="background-image:url('./thumbnails/video5.jpg');"><div class="play-icon"></div></div>
-        <div class="close-video">×</div>
-        <div class="video-iframe-container">
-          <iframe src="https://player.vimeo.com/video/1126782138?autopause=0&app_id=58479&loop=1"
-                  allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-                  referrerpolicy="strict-origin-when-cross-origin" title="WVB Promo"
-                  webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-        </div>
-      </div>
-      <!-- 6 -->
-      <div class="video-item">
-        <div class="video-preview" style="background-image:url('./thumbnails/video6.jpg');"><div class="play-icon"></div></div>
-        <div class="close-video">×</div>
-        <div class="video-iframe-container">
-          <iframe src="https://player.vimeo.com/video/1126782054?autopause=0&app_id=58479&loop=1"
-                  allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-                  referrerpolicy="strict-origin-when-cross-origin" title="WVB"
-                  webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-        </div>
-      </div>
-      <!-- 7 -->
-      <div class="video-item">
-        <div class="video-preview" style="background-image:url('./thumbnails/video7.jpg');"><div class="play-icon"></div></div>
-        <div class="close-video">×</div>
-        <div class="video-iframe-container">
-          <iframe src="https://player.vimeo.com/video/1126782179?autopause=0&app_id=58479&loop=1"
-                  allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-                  referrerpolicy="strict-origin-when-cross-origin" title="Small ad"
-                  webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-        </div>
-      </div>
-      <!-- 8 -->
-      <div class="video-item">
-        <div class="video-preview" style="background-image:url('./thumbnails/video8.jpg');"><div class="play-icon"></div></div>
-        <div class="close-video">×</div>
-        <div class="video-iframe-container">
-          <iframe src="https://player.vimeo.com/video/1126782216?autopause=0&app_id=58479&loop=1"
-                  allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-                  referrerpolicy="strict-origin-when-cross-origin" title="Promo"
-                  webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-        </div>
-      </div>
-      <!-- 9 -->
-      <div class="video-item">
-        <div class="video-preview" style="background-image:url('./thumbnails/video9.jpg');"><div class="play-icon"></div></div>
-        <div class="close-video">×</div>
-        <div class="video-iframe-container">
-          <iframe src="https://player.vimeo.com/video/1126782307?autopause=0&app_id=58479&loop=1"
-                  allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-                  referrerpolicy="strict-origin-when-cross-origin" title="Corporate template"
-                  webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-        </div>
-      </div>
-      <!-- 10 -->
-      <div class="video-item">
-        <div class="video-preview" style="background-image:url('./thumbnails/video10.jpg');"><div class="play-icon"></div></div>
-        <div class="close-video">×</div>
-        <div class="video-iframe-container">
-          <iframe src="https://player.vimeo.com/video/1126782264?autopause=0&app_id=58479&loop=1"
-                  allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-                  referrerpolicy="strict-origin-when-cross-origin" title="Art Promo"
-                  webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-        </div>
-      </div>
+                <!-- Video 2 -->
+                <div class="video-item">
+                    <div class="video-preview" style="background-image: url('https://vumbnail.com/1126781301.jpg');">
+                        <div class="play-icon"></div>
+                    </div>
+                    <div class="close-video">×</div>
+                    <div class="video-iframe-container">
+                        <iframe src="https://player.vimeo.com/video/1126781301?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" 
+                                frameborder="0" 
+                                allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" 
+                                referrerpolicy="strict-origin-when-cross-origin" 
+                                title="Pulse Promo">
+                        </iframe>
+                    </div>
+                </div>
 
-      <!-- 11 (новое) — превью video11.jpg -->
-      <div class="video-item">
-        <div class="video-preview" style="background-image:url('./thumbnails/video11.jpg');"><div class="play-icon"></div></div>
-        <div class="close-video">×</div>
-        <div class="video-iframe-container">
-          <iframe src="https://player.vimeo.com/video/1131746186?title=0&byline=0&portrait=0&badge=0&autopause=0&app_id=58479&loop=1"
-                  allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-                  referrerpolicy="strict-origin-when-cross-origin" title="anim1"
-                  webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-        </div>
-      </div>
+                <!-- Video 3 -->
+                <div class="video-item">
+                    <div class="video-preview" style="background-image: url('https://vumbnail.com/1126781752.jpg');">
+                        <div class="play-icon"></div>
+                    </div>
+                    <div class="close-video">×</div>
+                    <div class="video-iframe-container">
+                        <iframe src="https://player.vimeo.com/video/1126781752?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" 
+                                frameborder="0" 
+                                allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" 
+                                referrerpolicy="strict-origin-when-cross-origin" 
+                                title="Pulsar">
+                        </iframe>
+                    </div>
+                </div>
 
-      <!-- 12 (новое) — превью video14.jpg -->
-      <div class="video-item">
-        <div class="video-preview" style="background-image:url('./thumbnails/video14.jpg');"><div class="play-icon"></div></div>
-        <div class="close-video">×</div>
-        <div class="video-iframe-container">
-          <iframe src="https://player.vimeo.com/video/1131746225?title=0&byline=0&portrait=0&badge=0&autopause=0&app_id=58479&loop=1"
-                  allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-                  referrerpolicy="strict-origin-when-cross-origin" title="anim2"
-                  webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-        </div>
-      </div>
+                <!-- Video 4 -->
+                <div class="video-item">
+                    <iframe src="https://player.vimeo.com/video/1126781589?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" 
+                            frameborder="0" 
+                            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" 
+                            referrerpolicy="strict-origin-when-cross-origin" 
+                            title="Art Promo">
+                    </iframe>
+                </div>
 
-      <!-- 13 (новое) — превью video13.jpg -->
-      <div class="video-item">
-        <div class="video-preview" style="background-image:url('./thumbnails/video13.jpg');"><div class="play-icon"></div></div>
-        <div class="close-video">×</div>
-        <div class="video-iframe-container">
-          <iframe src="https://player.vimeo.com/video/1131746283?title=0&byline=0&portrait=0&badge=0&autopause=0&app_id=58479&loop=1"
-                  allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-                  referrerpolicy="strict-origin-when-cross-origin" title="anim4"
-                  webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-        </div>
-      </div>
+                <!-- Video 5 -->
+                <div class="video-item">
+                    <div class="video-preview" style="background-image: url('https://vumbnail.com/1126782138.jpg');">
+                        <div class="play-icon"></div>
+                    </div>
+                    <div class="close-video">×</div>
+                    <div class="video-iframe-container">
+                        <iframe src="https://player.vimeo.com/video/1126782138?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" 
+                                frameborder="0" 
+                                allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" 
+                                referrerpolicy="strict-origin-when-cross-origin" 
+                                title="WVB Promo">
+                        </iframe>
+                    </div>
+                </div>
 
-      <!-- 14 (новое) — превью video12.jpg -->
-      <div class="video-item">
-        <div class="video-preview" style="background-image:url('./thumbnails/video12.jpg');"><div class="play-icon"></div></div>
-        <div class="close-video">×</div>
-        <div class="video-iframe-container">
-          <iframe src="https://player.vimeo.com/video/1131746302?title=0&byline=0&portrait=0&badge=0&autopause=0&app_id=58479&loop=1"
-                  allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-                  referrerpolicy="strict-origin-when-cross-origin" title="anim5"
-                  webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-        </div>
-      </div>
+                <!-- Video 6 -->
+                <div class="video-item">
+                    <div class="video-preview" style="background-image: url('https://vumbnail.com/1126782054.jpg');">
+                        <div class="play-icon"></div>
+                    </div>
+                    <div class="close-video">×</div>
+                    <div class="video-iframe-container">
+                        <iframe src="https://player.vimeo.com/video/1126782054?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" 
+                                frameborder="0" 
+                                allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" 
+                                referrerpolicy="strict-origin-when-cross-origin" 
+                                title="WVB">
+                        </iframe>
+                    </div>
+                </div>
 
+                <!-- Video 7 -->
+                <div class="video-item">
+                    <div class="video-preview" style="background-image: url('https://vumbnail.com/1126782179.jpg');">
+                        <div class="play-icon"></div>
+                    </div>
+                    <div class="close-video">×</div>
+                    <div class="video-iframe-container">
+                        <iframe src="https://player.vimeo.com/video/1126782179?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" 
+                                frameborder="0" 
+                                allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" 
+                                referrerpolicy="strict-origin-when-cross-origin" 
+                                title="Small ad">
+                        </iframe>
+                    </div>
+                </div>
+
+                <!-- Video 8 -->
+                <div class="video-item">
+                    <div class="video-preview" style="background-image: url('https://vumbnail.com/1126782216.jpg');">
+                        <div class="play-icon"></div>
+                    </div>
+                    <div class="close-video">×</div>
+                    <div class="video-iframe-container">
+                        <iframe src="https://player.vimeo.com/video/1126782216?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" 
+                                frameborder="0" 
+                                allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" 
+                                referrerpolicy="strict-origin-when-cross-origin" 
+                                title="Promo">
+                        </iframe>
+                    </div>
+                </div>
+
+                <!-- Video 9 -->
+                <div class="video-item">
+                    <div class="video-preview" style="background-image: url('https://vumbnail.com/1126782307.jpg');">
+                        <div class="play-icon"></div>
+                    </div>
+                    <div class="close-video">×</div>
+                    <div class="video-iframe-container">
+                        <iframe src="https://player.vimeo.com/video/1126782307?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" 
+                                frameborder="0" 
+                                allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" 
+                                referrerpolicy="strict-origin-when-cross-origin" 
+                                title="Corporate template">
+                        </iframe>
+                    </div>
+                </div>
+
+                <!-- Video 10 -->
+                <div class="video-item">
+                    <div class="video-preview" style="background-image: url('https://vumbnail.com/1126782264.jpg');">
+                        <div class="play-icon"></div>
+                    </div>
+                    <div class="close-video">×</div>
+                    <div class="video-iframe-container">
+                        <iframe src="https://player.vimeo.com/video/1126782264?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" 
+                                frameborder="0" 
+                                allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" 
+                                referrerpolicy="strict-origin-when-cross-origin" 
+                                title="Art Promo">
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="contact-section">
+            <h2 id="contact">CONTACT</h2>
+            <div class="contact-info">
+                <p>Email: <a href="mailto:your-email@example.com">your-email@example.com</a></p>
+                <p>Phone: <a href="tel:+1234567890">+1 (234) 567-890</a></p>
+                <p>Vimeo: <a href="https://vimeo.com/your-username" target="_blank">vimeo.com/your-username</a></p>
+            </div>
+        </div>
     </div>
-  </div>
+    
+    <script src="https://player.vimeo.com/api/player.js"></script>
+    <script>
+        // Обработка клика на видео
+        document.querySelectorAll('.video-item').forEach(item => {
+            item.addEventListener('click', function() {
+                // Закрыть все открытые видео
+                document.querySelectorAll('.video-item.playing').forEach(playing => {
+                    if (playing !== this) {
+                        playing.classList.remove('playing');
+                    }
+                });
+                
+                // Открыть/закрыть текущее видео
+                this.classList.toggle('playing');
+            });
 
-  <div class="contact-section">
-    <h2>CONTACT</h2>
-    <div class="contact-wrap">
-      <div class="contact-icons">
-        <a class="icon-btn" href="https://t.me/AlexViGy" target="_blank" rel="noopener" aria-label="Telegram" title="Telegram">
-          <img src="./icons/Telegram.png" alt="Telegram">
-        </a>
-        <a class="icon-btn" href="https://www.linkedin.com/in/alex-videoguy" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn">
-          <img src="./icons/Linkedin.png" alt="LinkedIn">
-        </a>
-        <a class="icon-btn" href="https://www.upwork.com/freelancers/~013b0be54296b1527c?mp_source=share" target="_blank" rel="noopener" aria-label="Upwork" title="Upwork">
-          <img src="./icons/Upwork.png" alt="Upwork">
-        </a>
-      </div>
+            // Обработка клика на кнопку закрытия
+            const closeBtn = item.querySelector('.close-video');
+            if (closeBtn) {
+                closeBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    item.classList.remove('playing');
+                });
+            }
+        });
 
-      <div class="contact-text">
-        <div class="row">
-          <a class="icon-btn" href="tel:+33753889200" aria-label="Call" title="Call">
-            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor">
-              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.9 19.9 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.9 19.9 0 0 1 2.08 4.18 2 2 0 0 1 4.06 2h3a2 2 0 0 1 2 1.72c.12.9.31 1.78.57 2.64a2 2 0 0 1-.45 2.11L8 9a16 16 0 0 0 7 7l.53-1.18a2 2 0 0 1 2.11-.45c.86.26 1.74.45 2.64.57A2 2 0 0 1 22 16.92z" stroke-width="2"/>
-            </svg>
-          </a>
-          <span>+33&nbsp;7&nbsp;53&nbsp;88&nbsp;92&nbsp;00</span>
-        </div>
-        <div class="row">
-          <a class="icon-btn" href="mailto:mail@alex-videoguy.com" aria-label="Email" title="Email">
-            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor">
-              <rect x="3" y="5" width="18" height="14" rx="2" stroke-width="2"/>
-              <path d="M3 7l9 6 9-6" stroke-width="2"/>
-            </svg>
-          </a>
-          <span>mail@alex-videoguy.com</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Vimeo API -->
-<script src="https://player.vimeo.com/api/player.js"></script>
-<script>
-  const items = Array.from(document.querySelectorAll('.video-item'));
-  const players = new Map();
-
-  items.forEach(item=>{
-    const iframe = item.querySelector('iframe');
-    const player = new Vimeo.Player(iframe);
-    players.set(iframe, player);
-
-    // Луп и подстраховка на 'ended'
-    player.setLoop(true).catch(()=>{});
-    player.on('ended', ()=>{
-      player.setCurrentTime(0).then(()=>player.play()).catch(()=>{});
-    });
-
-    // Когда этот плеер начал играть — остановить остальные
-    player.on('play', ()=> pauseOthers(player));
-
-    // Клик по карточке — открыть и запустить
-    item.addEventListener('click', (e)=>{
-      if (e.target.closest('.close-video')) return;
-      items.forEach(it => { if (it !== item) it.classList.remove('playing'); });
-      item.classList.add('playing');
-      player.play().catch(()=>{});
-      pauseOthers(player);
-    });
-
-    // Крестик
-    item.querySelector('.close-video').addEventListener('click', (e)=>{
-      e.stopPropagation();
-      item.classList.remove('playing');
-      player.pause();
-    });
-  });
-
-  function pauseOthers(active){
-    players.forEach(p => { if (p !== active) p.pause(); });
-  }
-
-  // Клик вне — закрыть все
-  document.addEventListener('click', (e)=>{
-    if (!e.target.closest('.video-item')){
-      items.forEach(it => it.classList.remove('playing'));
-      players.forEach(p => p.pause());
-    }
-  });
-</script>
+        // Закрыть видео при клике вне плеера
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.video-item')) {
+                document.querySelectorAll('.video-item.playing').forEach(playing => {
+                    playing.classList.remove('playing');
+                });
+            }
+        });
+    </script>
 </body>
 </html>
