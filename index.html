@@ -27,9 +27,9 @@
         }
 
         .portfolio-container {
-            max-width: 1100px;
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 60px 20px 80px;
+            padding: 60px 24px 80px;
         }
 
         .portfolio-title {
@@ -37,7 +37,7 @@
             font-weight: 800;
             letter-spacing: -0.03em;
             color: #0f172a;
-            margin-bottom: 16px;
+            margin-bottom: 10px;
             text-align: center;
         }
 
@@ -47,13 +47,13 @@
             letter-spacing: 0.18em;
             text-align: center;
             color: #64748b;
-            margin-bottom: 48px;
+            margin-bottom: 36px;
         }
 
         .main-menu {
             display: flex;
             justify-content: center;
-            margin-bottom: 48px;
+            margin-bottom: 56px;
         }
 
         .main-menu ul {
@@ -78,35 +78,36 @@
         }
 
         .section-heading {
-            font-size: 1.25rem;
+            font-size: 1.1rem;
             font-weight: 700;
-            letter-spacing: 0.12em;
+            letter-spacing: 0.14em;
             color: #475569;
             margin-bottom: 24px;
-            text-align: center;
+            text-align: left;
         }
 
         .video-list {
             display: flex;
             flex-direction: column;
-            gap: 40px;
+            gap: 52px;
         }
 
         .video-item-wrapper {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 18px;
+            grid-template-columns: 1.05fr 1fr;
+            gap: 28px;
             align-items: start;
         }
 
         .video-meta {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 12px;
+            padding-top: 6px;
         }
 
         .project-title {
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             font-weight: 700;
             color: #0f172a;
             letter-spacing: -0.01em;
@@ -114,6 +115,7 @@
 
         .project-desc {
             color: #475569;
+            line-height: 1.7;
         }
 
         .badge-row {
@@ -265,13 +267,16 @@
             color: #0f172a;
         }
 
+        @media (max-width: 1024px) {
+            .video-item-wrapper {
+                grid-template-columns: 1fr;
+                gap: 18px;
+            }
+        }
+
         @media (max-width: 768px) {
             .portfolio-container {
                 padding: 40px 16px 60px;
-            }
-
-            .video-item-wrapper {
-                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -528,6 +533,15 @@
         const players = [];
         const videoItems = Array.from(document.querySelectorAll('.video-item'));
 
+        const pauseAllExcept = (activeIndex) => {
+            players.forEach((player, index) => {
+                if (index !== activeIndex) {
+                    player.pause();
+                    videoItems[index].classList.remove('playing');
+                }
+            });
+        };
+
         videoItems.forEach((item, index) => {
             const iframe = item.querySelector('iframe');
             const player = new Vimeo.Player(iframe);
@@ -536,19 +550,16 @@
             const preview = item.querySelector('.video-preview');
             const closeBtn = item.querySelector('.close-video');
 
-            const togglePlayState = (shouldPlay) => {
-                if (shouldPlay) {
-                    player.play();
-                } else {
-                    player.pause();
-                }
+            const startPlayback = () => {
+                pauseAllExcept(index);
+                item.classList.add('playing');
+                player.play();
             };
 
             if (preview) {
                 preview.addEventListener('click', (e) => {
                     e.stopPropagation();
-                    item.classList.add('playing');
-                    togglePlayState(true);
+                    startPlayback();
                 });
             }
 
@@ -556,24 +567,21 @@
                 closeBtn.addEventListener('click', (e) => {
                     e.stopPropagation();
                     item.classList.remove('playing');
-                    togglePlayState(false);
+                    player.pause();
                 });
             }
 
-            item.addEventListener('click', () => {
-                const isActive = item.classList.contains('playing');
-                item.classList.toggle('playing', !isActive);
-                togglePlayState(!isActive);
+            player.on('play', () => {
+                pauseAllExcept(index);
+                item.classList.add('playing');
             });
 
-            player.on('play', () => {
-                players.forEach((other, otherIndex) => {
-                    if (otherIndex !== index) {
-                        other.pause();
-                        videoItems[otherIndex].classList.remove('playing');
-                    }
-                });
-                item.classList.add('playing');
+            player.on('pause', () => {
+                item.classList.remove('playing');
+            });
+
+            player.on('ended', () => {
+                item.classList.remove('playing');
             });
         });
 
